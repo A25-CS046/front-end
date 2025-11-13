@@ -47,7 +47,7 @@ export default function Sidebar() {
           )}
         </div>
         <div>
-          <h1 className="text-xl text-primary dark:text-emerald-300">AEGIS</h1>
+          <h1 className="text-xl text-blue-600 dark:text-emerald-400">AEGIS</h1>
           <p className="text-sm text-base-content dark:text-gray-400">
             Predictive Maintenance
           </p>
