@@ -16,12 +16,12 @@ function App() {
       <Routes>
         {/* Protected Route */}
         <Route path="/" element={<Dashboard />} />
-        <Route path="/aiRecommendations" element={<AiRecommendations />} />
-        <Route path="/ticketAssignment" element={<TicketAssignment />} />
-        <Route path="/userManagement" element={<UserManagement />} />
-        <Route path="/maintenanceSchedule" element={<MaintenanceSchedule />} />
-        <Route path="/aiCopilot" element={<AiCopilot />} />
-        <Route path="/machineDetails" element={<MachineDetails />} />
+        <Route path="/ai-recommendations" element={<AiRecommendations />} />
+        <Route path="/ticket-assignment" element={<TicketAssignment />} />
+        <Route path="/user-management" element={<UserManagement />} />
+        <Route path="/maintenance-schedule" element={<MaintenanceSchedule />} />
+        <Route path="/ai-copilot" element={<AiCopilot />} />
+        <Route path="/machine-details" element={<MachineDetails />} />
 
         {/* Auth Route */}
         <Route path="/auth/signin" element={<SignIn />} />

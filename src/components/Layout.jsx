@@ -4,7 +4,7 @@ import Sidebar from "@/components/Sidebar";
 
 export default function Layout({ children }) {
   return (
-    <div className="drawer lg:drawer-open">
+    <div className="drawer lg:drawer-open dark:bg-slate-950">
       <input id="app-drawer" type="checkbox" className="drawer-toggle" />
 
       {/* Main content */}

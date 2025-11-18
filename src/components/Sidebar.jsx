@@ -19,21 +19,21 @@ export default function Sidebar() {
   const { theme, toggleTheme } = useTheme();
   const links = [
     { name: "Dashboard", path: "/", icon: Activity },
-    { name: "AI Recommendations", path: "/aiRecommendations", icon: Sparkles },
+    { name: "AI Recommendations", path: "/ai-recommendations", icon: Sparkles },
     {
       name: "Ticket Assignment",
-      path: "/ticketAssignment",
+      path: "/ticket-assignment",
       icon: ClipboardList,
     },
-    { name: "User Management", path: "/userManagement", icon: Users },
+    { name: "User Management", path: "/user-management", icon: Users },
     {
       name: "Maintenance Schedule",
-      path: "/maintenanceSchedule",
+      path: "/maintenance-schedule",
       icon: Calendar,
     },
-    { name: "AI Copilot", path: "/aiCopilot", icon: BotMessageSquare },
-    { name: "Machine Details", path: "/machineDetails", icon: Server },
-    { name: "Change Password", path: "/test", icon: KeyRound },
+    { name: "AI Copilot", path: "/ai-copilot", icon: BotMessageSquare },
+    { name: "Machine Details", path: "/machine-details", icon: Server },
+    { name: "Change Password", path: "/change-password", icon: KeyRound },
   ];
 
   return (
