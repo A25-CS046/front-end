@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { SendHorizonal, Bot, User } from "lucide-react";
 import { MessageSquarePlus } from "lucide-react";
-import ChatMessage from "@/components/chat-message/ChatMessage";
+import ChatMessage from "@/components/AIcopilot/ChatMessage";
 import { formatTime } from "@/utils/formatTime";
 import { useAutoResizeTextarea } from "@/hooks/useAutoResizeTextarea";
 import useShrinkHeader from "@/hooks/useShrinkHeader";
