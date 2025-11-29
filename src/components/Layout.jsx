@@ -8,9 +8,9 @@ export default function Layout({ children }) {
       <input id="app-drawer" type="checkbox" className="drawer-toggle" />
 
       {/* Main content */}
-      <div className="drawer-content flex flex-col">
+      <div className="drawer-content flex flex-col flex-1 relative">
         <Navbar />
-        <main className="p-6">{children}</main>
+        <main className="overflow-y-auto h-screen">{children}</main>
       </div>
 
       {/* Sidebar */}

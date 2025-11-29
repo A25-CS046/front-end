@@ -24,7 +24,7 @@ export default function SupervisorDashboard() {
   };
 
   return (
-    <div className="space-y-4 sm:space-y-6">
+    <div className="p-6 space-y-4 sm:space-y-6">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-blue-600 dark:text-emerald-400 mb-1 sm:mb-2">

@@ -12,6 +12,14 @@
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
+/* Custom Chat Bubble Styling */
+.chat-start .chat-bubble::before {
+  content: none;
+}
+.chat-end .chat-bubble::before {
+  content: none;
+}
+
 /* @plugin "daisyui/theme" {
   name: "daydark";
   default: false;
