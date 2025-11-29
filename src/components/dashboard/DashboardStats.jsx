@@ -1,9 +1,9 @@
-import { Card } from "@/components/ui/card";
+import { Card } from "@/components/ui/Card";
 import { Activity, Users, Wrench, Server } from "lucide-react";
 
 function StatCard({ title, value, subtext, icon, className, textColor }) {
   return (
-    <Card className={`bg-gradient-to-br ${className} p-4`}>
+    <Card className={`bg-linear-to-br ${className} p-4`}>
       <div className="flex items-center justify-between mb-2">
         <p className="text-sm text-slate-600 dark:text-slate-400">{title}</p>
         {icon}
