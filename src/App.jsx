@@ -22,6 +22,7 @@ function App() {
         <Route path="/maintenance-schedule" element={<MaintenanceSchedule />} />
         <Route path="/ai-copilot" element={<AiCopilot />} />
         <Route path="/machine-details" element={<MachineDetails />} />
+        <Route path="/machine-details/:unitId" element={<MachineDetails />} />
 
         {/* Auth Route */}
         <Route path="/auth/signin" element={<SignIn />} />

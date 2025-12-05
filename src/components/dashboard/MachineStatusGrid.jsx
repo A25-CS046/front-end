@@ -22,14 +22,14 @@ const getStatusIcon = (status) => {
 
 export default function MachineStatusGrid({ machines, onDetailsClick }) {
   return (
-    <Card className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 p-4">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-slate-900 dark:text-slate-100">
+    <Card className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 p-3 sm:p-4">
+      <div className="flex items-center justify-between mb-3 sm:mb-4">
+        <h3 className="text-slate-900 dark:text-slate-100 text-sm sm:text-base">
           Quick Status View
         </h3>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-3">
         {machines.map((machine) => (
           <div
             key={machine.id}
@@ -57,13 +57,16 @@ export default function MachineStatusGrid({ machines, onDetailsClick }) {
         ))}
       </div>
 
-      <div className="mt-4 text-center">
+      <div className="mt-3 sm:mt-4 text-center">
         <Button
           variant="outline"
           onClick={onDetailsClick}
-          className="border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300"
+          className="border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs sm:text-sm w-full sm:w-auto"
         >
-          View Detailed Sensor Data for All Machines
+          <span className="hidden sm:inline">
+            View Detailed Sensor Data for All Machines
+          </span>
+          <span className="sm:hidden">View All Machine Details</span>
           <TrendingUp className="w-4 h-4 ml-2" />
         </Button>
       </div>

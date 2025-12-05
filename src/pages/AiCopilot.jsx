@@ -16,7 +16,6 @@ export default function AiCopilot() {
       time: new Date(),
     },
   ]);
-  // const [isScrolled, setScrolled] = useState(false);
   const textareaRef = useAutoResizeTextarea(input);
 
   const suggestedQuestions = [
@@ -25,8 +24,6 @@ export default function AiCopilot() {
     "Berikan rekomendasi perbaikan untuk mesin saya",
     "Tampilkan tren suhu mesin dalam 24 jam terakhir",
   ];
-
-  // useShrinkHeader(setScrolled);
 
   const handleSend = () => {
     if (!input.trim()) return;

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Card,
   CardHeader,
@@ -30,20 +29,19 @@ export default function MachineSidebar({
   machines,
   selectedMachine,
   onSelect,
+  searchQuery,
+  onSearchChange,
+  statusFilter,
+  onStatusChange,
+  isLoading,
+  totalCount,
+  currentPage,
+  totalPages,
+  onNextPage,
+  onPrevPage,
+  hasNextPage,
+  hasPrevPage,
 }) {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [statusFilter, setStatusFilter] = useState("all");
-
-  const filteredMachines = machines.filter((machine) => {
-    const matchesSearch =
-      machine.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      machine.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      machine.location.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesStatus =
-      statusFilter === "all" || machine.status === statusFilter;
-    return matchesSearch && matchesStatus;
-  });
-
   const getStatusColor = (status) => {
     switch (status) {
       case "healthy":
@@ -63,11 +61,8 @@ export default function MachineSidebar({
   };
 
   return (
-    // 1. Wrapper Sticky agar sidebar tetap diam saat user scroll konten kanan
     <div className="sticky top-6 h-[calc(100vh-3rem)]">
-      {/* 2. Card dibuat flex-col dan h-full agar mengisi tinggi wrapper */}
       <Card className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 h-full flex flex-col shadow-sm">
-        {/* 3. Header dikasih shrink-0 agar ukurannya tidak tergencet */}
         <CardHeader className="border-b border-slate-200 dark:border-slate-800 shrink-0 pb-3">
           <CardTitle className="text-slate-900 dark:text-slate-100">
             All Machines
@@ -81,11 +76,11 @@ export default function MachineSidebar({
               <Input
                 placeholder="Search machines..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => onSearchChange(e.target.value)}
                 className="pl-9 bg-slate-50 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-100"
               />
             </div>
-            <Select value={statusFilter} onValueChange={setStatusFilter}>
+            <Select value={statusFilter} onValueChange={onStatusChange}>
               <SelectTrigger className="bg-slate-50 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-100">
                 <Filter className="w-4 h-4 mr-2" />
                 <SelectValue />
@@ -97,59 +92,109 @@ export default function MachineSidebar({
                 <SelectItem value="critical">Critical</SelectItem>
               </SelectContent>
             </Select>
+
+            <div className="text-xs text-slate-600 dark:text-slate-400">
+              Showing {machines.length} of {totalCount} machines
+            </div>
           </div>
         </CardHeader>
 
-        {/* 4. ScrollArea dibuat flex-1 agar otomatis mengisi sisa ruang kosong */}
         <ScrollArea className="flex-1 w-full">
           <div className="p-4 space-y-2 pr-3">
-            {filteredMachines.map((machine) => (
-              <button
-                key={machine.id}
-                onClick={() => onSelect(machine)}
-                className={`w-full p-4 rounded-lg border transition-all text-left ${
-                  selectedMachine.id === machine.id
-                    ? "bg-blue-500/10 dark:bg-emerald-500/10 border-blue-500/30 dark:border-emerald-500/30"
-                    : "bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
-                }`}
-              >
-                <div className="flex items-start justify-between mb-2">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-slate-900 dark:text-slate-100 font-medium">
-                        {machine.name}
-                      </span>
-                      <ChevronRight
-                        className={`w-4 h-4 transition-transform ${
-                          selectedMachine.id === machine.id
-                            ? "text-blue-600 dark:text-emerald-400 translate-x-1"
-                            : "text-slate-400"
-                        }`}
-                      />
+            {isLoading ? (
+              [...Array(5)].map((_, i) => (
+                <div
+                  key={i}
+                  className="w-full p-4 rounded-lg bg-slate-100 dark:bg-slate-800/50 animate-pulse"
+                  style={{ height: "80px" }}
+                />
+              ))
+            ) : machines.length === 0 ? (
+              <div className="text-center py-8 text-slate-500 dark:text-slate-400">
+                <p className="text-sm">No machines found</p>
+                <p className="text-xs mt-1">Try adjusting your filters</p>
+              </div>
+            ) : (
+              // Machine list (no frontend filtering - backend handles it)
+              machines.map((machine) => (
+                <button
+                  key={machine.unitId}
+                  onClick={() => onSelect(machine)}
+                  className={`w-full p-4 rounded-lg border transition-all text-left ${
+                    selectedMachine?.unitId === machine.unitId
+                      ? "bg-blue-500/10 dark:bg-emerald-500/10 border-blue-500/30 dark:border-emerald-500/30"
+                      : "bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
+                  }`}
+                >
+                  <div className="flex items-start justify-between mb-2">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-slate-900 dark:text-slate-100 font-medium">
+                          {machine.name ?? "—"}
+                        </span>
+                        <ChevronRight
+                          className={`w-4 h-4 transition-transform ${
+                            selectedMachine?.unitId === machine.unitId
+                              ? "text-blue-600 dark:text-emerald-400 translate-x-1"
+                              : "text-slate-400"
+                          }`}
+                        />
+                      </div>
+                      <p className="text-xs text-slate-500 dark:text-slate-400">
+                        {machine.unitId ?? "—"}
+                      </p>
                     </div>
-                    <p className="text-xs text-slate-500 dark:text-slate-400">
-                      {machine.id}
-                    </p>
+                    <Badge
+                      className={`${getStatusColor(machine.status)} border`}
+                    >
+                      {getStatusIcon(machine.status)}
+                      <span className="ml-1 capitalize">
+                        {machine.status ?? "unknown"}
+                      </span>
+                    </Badge>
                   </div>
-                  <Badge className={`${getStatusColor(machine.status)} border`}>
-                    {getStatusIcon(machine.status)}
-                    <span className="ml-1 capitalize">{machine.status}</span>
-                  </Badge>
-                </div>
-                <div className="flex items-center gap-4 text-xs text-slate-600 dark:text-slate-400 mb-2">
-                  <div className="flex items-center gap-1">
-                    <Activity className="w-3 h-3" />
-                    <span>{machine.health}%</span>
+                  <div className="flex items-center gap-4 text-xs text-slate-600 dark:text-slate-400 mb-2">
+                    <div className="flex items-center gap-1">
+                      <Activity className="w-3 h-3" />
+                      <span>{machine.healthPercent ?? "—"}%</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Calendar className="w-3 h-3" />
+                      <span>RUL: {machine.syntheticRUL ?? "—"}d</span>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-1">
-                    <Calendar className="w-3 h-3" />
-                    <span>RUL: {machine.rul}d</span>
-                  </div>
-                </div>
-                <Progress value={machine.health} className="h-1" />
-              </button>
-            ))}
+                  <Progress
+                    value={machine.healthPercent ?? 0}
+                    className="h-1"
+                  />
+                </button>
+              ))
+            )}
           </div>
+
+          {totalPages > 1 && (
+            <div className="p-4 border-t border-slate-200 dark:border-slate-800">
+              <div className="flex items-center justify-between gap-2">
+                <button
+                  onClick={onPrevPage}
+                  disabled={!hasPrevPage || isLoading}
+                  className="px-3 py-1.5 text-xs bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Previous
+                </button>
+                <span className="text-xs text-slate-600 dark:text-slate-400">
+                  Page {currentPage + 1} of {totalPages}
+                </span>
+                <button
+                  onClick={onNextPage}
+                  disabled={!hasNextPage || isLoading}
+                  className="px-3 py-1.5 text-xs bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+          )}
         </ScrollArea>
       </Card>
     </div>

@@ -78,7 +78,6 @@ const mockRecommendations = [
     createdAt: new Date(Date.now() - 24 * 60 * 60 * 1000),
     aiModel: "AEGIS-Hydraulic-v1.5",
   },
-  // (data lain disingkat)
 ];
 
 export default mockRecommendations;
