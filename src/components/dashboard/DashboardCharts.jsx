@@ -18,9 +18,9 @@ export default function DashboardCharts({
   teamPerformance,
 }) {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-4">
-      <Card className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 p-4 sm:p-6">
-        <h3 className="text-slate-900 dark:text-slate-100 mb-4">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 mb-4">
+      <Card className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 p-3 sm:p-4 lg:p-6">
+        <h3 className="text-slate-900 dark:text-slate-100 mb-3 sm:mb-4 text-sm sm:text-base">
           Machine Status Distribution
         </h3>
 
@@ -69,8 +69,8 @@ export default function DashboardCharts({
         </div>
       </Card>
 
-      <Card className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 p-4 sm:p-6">
-        <h3 className="text-slate-900 dark:text-slate-100 mb-4">
+      <Card className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 p-3 sm:p-4 lg:p-6">
+        <h3 className="text-slate-900 dark:text-slate-100 mb-3 sm:mb-4 text-sm sm:text-base">
           Team Performance Trends
         </h3>
 

@@ -8,7 +8,8 @@ import {
   Activity,
 } from "lucide-react";
 
-const riskPredictions = [
+// Static fallback data
+const staticRiskPredictions = [
   {
     machineId: "TUR-004",
     machineName: "Turbine D",
@@ -50,6 +51,8 @@ const riskPredictions = [
     trend: "stable",
   },
 ];
+
+const staticSummary = { critical: 1, high: 1, medium: 1, low: 1 };
 
 const RISK_STYLES = {
   critical: {
@@ -174,8 +177,55 @@ const RiskCard = ({ data }) => {
   );
 };
 
-export default function RiskPredictionCards() {
+export default function RiskPredictionCards({
+  predictions = [],
+  summary = null,
+  isLoading = false,
+}) {
   const statsOrder = ["critical", "high", "medium", "low"];
+
+  // Use API data or fallback to static
+  const displayPredictions =
+    predictions.length > 0 ? predictions : staticRiskPredictions;
+  const displaySummary = summary || staticSummary;
+
+  // Loading skeleton
+  if (isLoading) {
+    return (
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-slate-900 dark:text-slate-100">
+              Predictive Risk Analysis
+            </h2>
+            <p className="text-sm text-slate-600 dark:text-slate-400">
+              AI-powered failure risk predictions
+            </p>
+          </div>
+          <Shield className="w-6 h-6 text-blue-600 dark:text-emerald-400" />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {[1, 2, 3, 4].map((i) => (
+            <Card
+              key={i}
+              className="bg-slate-100 dark:bg-slate-800 p-4 animate-pulse"
+            >
+              <div className="space-y-3">
+                <div className="h-5 bg-slate-200 dark:bg-slate-700 rounded w-3/4"></div>
+                <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-1/2"></div>
+                <div className="h-2 bg-slate-200 dark:bg-slate-700 rounded w-full"></div>
+                <div className="grid grid-cols-2 gap-3 pt-2">
+                  <div className="h-8 bg-slate-200 dark:bg-slate-700 rounded"></div>
+                  <div className="h-8 bg-slate-200 dark:bg-slate-700 rounded"></div>
+                </div>
+              </div>
+            </Card>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-4">
@@ -187,17 +237,34 @@ export default function RiskPredictionCards() {
 
           <p className="text-sm text-slate-600 dark:text-slate-400">
             AI-powered failure risk predictions
+            {predictions.length > 0 && (
+              <span className="ml-2 text-emerald-600 dark:text-emerald-400">
+                • Live
+              </span>
+            )}
           </p>
         </div>
 
         <Shield className="w-6 h-6 text-blue-600 dark:text-emerald-400" />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {riskPredictions.map((prediction) => (
-          <RiskCard key={prediction.machineId} data={prediction} />
-        ))}
-      </div>
+      {displayPredictions.length === 0 ? (
+        <Card className="bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 p-8 text-center">
+          <Shield className="w-12 h-12 text-slate-400 mx-auto mb-3" />
+          <p className="text-slate-600 dark:text-slate-400">
+            No risk predictions available
+          </p>
+          <p className="text-sm text-slate-500 dark:text-slate-500">
+            All machines are operating within normal parameters
+          </p>
+        </Card>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {displayPredictions.map((prediction) => (
+            <RiskCard key={prediction.machineId} data={prediction} />
+          ))}
+        </div>
+      )}
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
         {statsOrder.map((level) => (
@@ -210,7 +277,7 @@ export default function RiskPredictionCards() {
             </p>
 
             <p className={`font-bold text-lg ${RISK_STYLES[level].text}`}>
-              {riskPredictions.filter((r) => r.riskLevel === level).length}
+              {displaySummary[level] ?? 0}
             </p>
           </Card>
         ))}

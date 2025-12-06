@@ -64,7 +64,6 @@ export const teamPerformance = [
   { name: "Week 4", completed: 18, efficiency: 92 },
 ];
 
-// Calculations
 export const stats = {
   total: allMachines.length,
   healthy: allMachines.filter((m) => m.status === "healthy").length,
