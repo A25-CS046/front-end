@@ -10,7 +10,7 @@ export default function Layout({ children }) {
       {/* Main content */}
       <div className="drawer-content flex flex-col flex-1 relative">
         <Navbar />
-        <main className="overflow-y-auto h-screen">{children}</main>
+        <main className="overflow-y-auto">{children}</main>
       </div>
 
       {/* Sidebar */}

@@ -205,7 +205,7 @@ export default function AiCopilot() {
 
           {isLoadingHistory && (
             <div className="absolute bottom-0 left-0 w-full h-1 overflow-hidden bg-gray-100 dark:bg-slate-800">
-              <div className="w-full h-full bg-linear-to-r from-blue-600 to-cyan-600 animate-loading-bar"></div>
+              <div className="w-full h-full bg-linear-to-r from-blue-600 via-cyan-600 to-emerald-500 animate-loading-bar"></div>
             </div>
           )}
         </div>
