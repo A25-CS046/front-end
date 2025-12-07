@@ -1,0 +1,40 @@
+# Dependencies
+node_modules
+
+# Build output (will be generated inside container)
+dist
+
+# Git
+.git
+.gitignore
+
+# IDE/Editor
+.vscode
+.idea
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Test files
+coverage
+*.test.js
+*.spec.js
+
+# Documentation
+README.md
+docs
+
+# Development environment files
+.env.local
+.env.development
+.env.development.local
+
+# NOTE: Do NOT exclude .env.production
+# It is needed during the build stage for Vite to bake in the variables
