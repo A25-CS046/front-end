@@ -1,21 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/Button";
-import { Sparkles } from "lucide-react";
+import { Sparkles, Loader2 } from "lucide-react";
 import RecommendationCard from "@/components/recommendations/RecommendationCard";
-import mockRecommendations from "@/data/recommendationsData";
+import { getRecommendations } from "@/api/recommendationService";
 
 export default function AiRecommendations({
   onCreateTicket,
   onAcknowledge,
   onDismiss,
 }) {
-  const [recommendations, setRecommendations] = useState(mockRecommendations);
+  const [recommendations, setRecommendations] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [filter, setFilter] = useState("all");
+
+  useEffect(() => {
+    fetchRecommendations();
+  }, []);
+
+  const fetchRecommendations = async () => {
+    try {
+      setLoading(true);
+      const data = await getRecommendations();
+      setRecommendations(data);
+      setError(null);
+    } catch (err) {
+      console.error("Failed to fetch recommendations:", err);
+      setError("Failed to load recommendations. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const filteredRecommendations = recommendations.filter((rec) => {
     if (filter === "all") return true;
-    if (filter === "new") return rec.status === "new";
-    return rec.severity === filter;
+    if (filter === "new") {
+      // "New" means created within the last 24 hours
+      const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+      return rec.createdAt >= oneDayAgo;
+    }
+    return true;
   });
 
   const handleCreateTicket = (rec) => {
@@ -40,6 +64,23 @@ export default function AiRecommendations({
     );
     onDismiss?.(id);
   };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-full min-h-[400px]">
+        <Loader2 className="w-8 h-8 animate-spin text-emerald-500" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center h-full min-h-[400px] text-slate-500">
+        <p className="mb-4">{error}</p>
+        <Button onClick={fetchRecommendations}>Retry</Button>
+      </div>
+    );
+  }
 
   return (
     <div className="p-6 space-y-6">
@@ -76,24 +117,17 @@ export default function AiRecommendations({
             onClick={() => setFilter("new")}
             className={
               filter === "new"
-                ? "dark:bg-emerald-600 dark:hover:bg-emerald-600 text-white"
+                ? "bg-blue-600 dark:bg-emerald-600 dark:hover:bg-emerald-600 text-white"
                 : "dark:bg-transparent border-slate-300 dark:border dark:border-slate-700 dark:hover:bg-emerald-600"
             }
           >
-            New ({recommendations.filter((r) => r.status === "new").length})
-          </Button>
-
-          <Button
-            size="sm"
-            onClick={() => setFilter("critical")}
-            className={
-              filter === "critical"
-                ? "bg-red-500 hover:bg-red-600 dark:bg-emerald-600 dark:hover:bg-emerald-600 text-white"
-                : "border-slate-300 dark:bg-transparent dark:border dark:border-slate-700 dark:hover:bg-emerald-600"
+            New (
+            {
+              recommendations.filter(
+                (r) => r.createdAt >= new Date(Date.now() - 24 * 60 * 60 * 1000)
+              ).length
             }
-          >
-            Critical (
-            {recommendations.filter((r) => r.severity === "critical").length})
+            )
           </Button>
         </div>
       </div>
