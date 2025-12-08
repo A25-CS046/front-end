@@ -1,16 +1,91 @@
-# React + Vite
+# Predictive Maintenance Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a React 19 + Vite 4 frontend for the Predictive Maintenance System.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Modern React (v19) with Vite for fast builds
+- Tailwind CSS + DaisyUI for UI
+- Recharts for data visualization
+- API integration via Axios
+- Environment variable support for production
+- Dockerized for easy deployment
 
-## React Compiler
+## Getting Started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 1. Install dependencies
 
-## Expanding the ESLint configuration
+```bash
+npm install
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 2. Development
+
+```bash
+npm run dev
+```
+
+### 3. Environment Variables
+
+Create a `.env.production` file in the root directory:
+
+```env
+VITE_API_BASE_URL=https://your-backend-url/api
+VITE_APP_NAME="Predictive Maintenance System"
+VITE_ENV=production
+```
+
+### 4. Build for Production
+
+```bash
+npm run build:prod
+```
+
+### 5. Dockerization
+
+Multi-stage Dockerfile is provided. To build and run:
+
+```bash
+docker build -t pm-frontend .
+docker run -d -p 8080:80 --name pm-frontend pm-frontend
+```
+
+### 6. Google Cloud Run Deployment
+
+You can deploy directly using Cloud Run:
+
+```bash
+gcloud run deploy aegis --source . --project=<your-gcp-project> --region=asia-southeast2 --port=80 --allow-unauthenticated
+```
+
+## SPA Routing
+
+Nginx is configured to handle React Router refreshes with:
+
+```
+location / {
+  try_files $uri $uri/ /index.html;
+}
+```
+
+## Troubleshooting
+
+- **Linux Case Sensitivity:** Ensure all import paths match the actual filename casing (e.g., `Card.jsx` → `@/components/ui/Card`).
+- **Node Version:** Vite requires Node.js 20+ for builds.
+- **Environment Variables:** Any change to `.env.production` requires a rebuild.
+
+## Folder Structure
+
+```
+src/
+  components/
+    ui/
+      Card.jsx, Button.jsx, ...
+    dashboard/
+    machine/
+    recommendations/
+  pages/
+  hooks/
+  api/
+  data/
+```
