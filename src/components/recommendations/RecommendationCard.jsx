@@ -31,30 +31,17 @@ export default function RecommendationCard({
   const getSeverityColor = (severity) => {
     switch (severity) {
       case "critical":
-        return "bg-red-500/10 text-red-600 dark:text-red-400 border-red-500/20";
+        return "text-red-600 dark:text-red-400 border-red-500";
       case "high":
-        return "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20";
+        return "text-amber-600 dark:text-amber-400 border-amber-500";
       case "medium":
-        return "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/30";
+        return "text-blue-600 dark:text-blue-400 border-blue-500";
       default:
-        return "bg-slate-500/10 text-slate-600 dark:text-slate-400 border-slate-500/20";
+        return "text-slate-600 dark:text-slate-400 border-slate-500";
     }
   };
 
-  const getCategoryIcon = (category) => {
-    switch (category) {
-      case "overheating":
-        return <ThermometerSun className="w-4 h-4" />;
-      case "vibration":
-        return <Activity className="w-4 h-4" />;
-      case "power":
-        return <TrendingUp className="w-4 h-4" />;
-      case "wear":
-        return <Wrench className="w-4 h-4" />;
-      default:
-        return <AlertTriangle className="w-4 h-4" />;
-    }
-  };
+
   return (
     <Card
       className={`bg-white dark:bg-slate-900 border dark:border-slate-800 p-4 sm:p-6 ${
@@ -80,8 +67,8 @@ export default function RecommendationCard({
 
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-1">
-                  <h3 className="text-slate-900 dark:text-slate-100">
-                    {rec.machineName}
+                  <h3 className="text-slate-900 dark:text-slate-100 font-semibold">
+                    {rec.machineType}
                   </h3>
                   <Badge
                     variant="outline"
@@ -100,8 +87,7 @@ export default function RecommendationCard({
                     variant="outline"
                     className={getSeverityColor(rec.severity)}
                   >
-                    {getCategoryIcon(rec.category)}
-                    <span className="ml-1 capitalize">{rec.category}</span>
+                    <span className="ml-1 capitalize">{rec.severity}</span>
                   </Badge>
 
                   <Badge
@@ -165,9 +151,9 @@ export default function RecommendationCard({
         {/* Recommended actions */}
         <RecommendedActionsSection actions={rec.recommendedActions} />
 
-        {(rec.estimatedCost ||
-          rec.estimatedDowntime ||
-          rec.predictedFailureDate) && <ImpactSection rec={rec} />}
+        {(rec.estimatedDowntime || rec.recommendedStart) && (
+          <ImpactSection rec={rec} />
+        )}
 
         {/* Action buttons */}
         <div className="flex flex-wrap gap-2 pt-2">

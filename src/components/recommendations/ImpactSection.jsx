@@ -1,30 +1,35 @@
 export default function ImpactSection({ rec }) {
+  const formatDate = (date) => {
+    if (!date) return "";
+    return date.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
+
   return (
     <div className="flex flex-wrap gap-4 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
       {rec.estimatedDowntime && (
         <div>
-          <p className="text-xs text-slate-600">Est. Downtime</p>
-          <p className="text-sm">{rec.estimatedDowntime}</p>
+          <p className="text-xs text-slate-600 dark:text-slate-400">
+            Est. Downtime
+          </p>
+          <p className="text-sm dark:text-slate-200">
+            {rec.estimatedDowntime}
+          </p>
         </div>
       )}
 
-      {rec.estimatedCost && (
+      {rec.recommendedStart && (
         <div>
-          <p className="text-xs text-slate-600">Est. Cost</p>
-          <p className="text-sm">{rec.estimatedCost}</p>
-        </div>
-      )}
-
-      {rec.predictedFailureDate && (
-        <div>
-          <p className="text-xs text-slate-600">Predicted Failure</p>
-          <p className="text-sm">
-            {rec.predictedFailureDate.toLocaleDateString("en-US", {
-              month: "short",
-              day: "numeric",
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
+          <p className="text-xs text-slate-600 dark:text-slate-400">
+            Recommended Schedule
+          </p>
+          <p className="text-sm dark:text-slate-200">
+            {formatDate(rec.recommendedStart)}
+            {rec.recommendedEnd && ` - ${formatDate(rec.recommendedEnd)}`}
           </p>
         </div>
       )}
