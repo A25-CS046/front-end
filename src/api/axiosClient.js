@@ -8,7 +8,7 @@ import axios from "axios";
  * - Error normalization
  */
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const TIMEOUT = 30000;
 const MAX_RETRIES = 2;
 const RETRY_DELAY = 1000;
