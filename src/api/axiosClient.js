@@ -10,7 +10,7 @@ import axios from "axios";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const TIMEOUT = 30000;
-const MAX_RETRIES = 2;
+const MAX_RETRIES = 0;
 const RETRY_DELAY = 1000;
 
 const axiosClient = axios.create({
@@ -33,7 +33,10 @@ const isRetryable = (error) => {
 const normalizeError = (error) => {
   if (error.response) {
     return {
-      message: error.response.data?.message || error.response.statusText || "Server error",
+      message:
+        error.response.data?.message ||
+        error.response.statusText ||
+        "Server error",
       status: error.response.status,
     };
   }

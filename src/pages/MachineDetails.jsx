@@ -268,7 +268,7 @@ export default function MachineDetails() {
   return (
     <div className="p-6 space-y-6">
       <div>
-        <h1 className="text-slate-900 dark:text-slate-100 mb-2 text-2xl font-bold">
+        <h1 className="text-xl sm:text-2xl font-semibold text-blue-600 dark:text-emerald-400 mb-1 sm:mb-2">
           Machine Details
         </h1>
 

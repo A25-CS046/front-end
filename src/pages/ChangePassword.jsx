@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { changePassword } from "@/api/authService";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/Card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/Button";
 import { Label } from "@/components/ui/label";
@@ -14,7 +20,6 @@ import {
   KeyRound,
 } from "lucide-react";
 import { toast } from "sonner";
-
 
 export default function ChangePassword() {
   const [oldPassword, setOldPassword] = useState("");
@@ -71,7 +76,7 @@ export default function ChangePassword() {
 
     try {
       await changePassword(oldPassword, newPassword);
-      
+
       toast.success("Password changed successfully!", {
         description:
           "Your password has been updated. Please use your new password on next login.",
@@ -85,11 +90,11 @@ export default function ChangePassword() {
       console.error("Change password error:", err);
       // Backend might return "Incorrect current password" or other messages
       const errorMessage = err.message || "Failed to update password";
-      
+
       if (errorMessage.toLowerCase().includes("current password")) {
-          setErrors({ oldPassword: errorMessage });
+        setErrors({ oldPassword: errorMessage });
       } else {
-          toast.error(errorMessage);
+        toast.error(errorMessage);
       }
     } finally {
       setIsLoading(false);
@@ -99,15 +104,12 @@ export default function ChangePassword() {
   return (
     <div className="max-w-3xl mx-auto">
       <div className="my-6">
-          <div className="flex items-center gap-2 mb-2">
-            <KeyRound className="w-5 h-5 text-emerald-500" />
-          <h1 className="text-blue-600 dark:text-emerald-400 mb-1 sm:mb-2">
-            Change Password
-          </h1>
-          </div>
-          <p className="text-slate-600 dark:text-slate-400 text-sm">
-            Update your password to keep your account secure
-          </p>
+        <h1 className="text-xl sm:text-2xl font-semibold text-blue-600 dark:text-emerald-400 mb-1 sm:mb-2">
+          Change Password
+        </h1>
+        <p className="text-slate-600 dark:text-slate-400 text-sm">
+          Update your password to keep your account secure
+        </p>
       </div>
 
       <Card className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800">
