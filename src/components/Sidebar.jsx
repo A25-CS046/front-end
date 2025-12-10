@@ -15,7 +15,7 @@ import {
   KeyRound,
   Wrench,
   LogOut,
-  UserStar 
+  UserStar,
 } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
@@ -92,7 +92,7 @@ export default function Sidebar() {
   };
 
   return (
-    <div className="flex flex-col min-h-full w-64 h-screen bg-base-200 dark:bg-slate-900 dark:border-r dark:border-gray-50/20">
+    <div className="flex flex-col min-h-full w-64 h-full bg-base-200 dark:bg-slate-900 dark:border-r dark:border-gray-50/20 overflow-y-auto">
       <div className="flex items-center gap-1 mx-2 my-3 p-2">
         <div className="w-12 h-12 rounded-lg flex items-center justify-center ">
           {theme === "light" ? (
@@ -132,9 +132,12 @@ export default function Sidebar() {
                 {user.name}
               </span>
               <span className="flex items-center text-slate-400 dark:text-blue-300 text-xs gap-1 capitalize">
-                {user.role === 'supervisor' ? 
-                <UserStar className="w-3 h-3" /> : <Wrench className="w-3 h-3" />}
-                
+                {user.role === "supervisor" ? (
+                  <UserStar className="w-3 h-3" />
+                ) : (
+                  <Wrench className="w-3 h-3" />
+                )}
+
                 {user.role}
               </span>
             </div>
@@ -145,7 +148,7 @@ export default function Sidebar() {
       </div>
 
       <div className="divider mx-0 my-2" />
-      <ul className="menu w-full h-full p-2 text-base-content dark:text-gray-300">
+      <ul className="menu w-full flex-1 p-2 text-base-content dark:text-gray-300">
         {links.map((link) => (
           <li key={link.path}>
             <NavLink
@@ -181,7 +184,6 @@ export default function Sidebar() {
           )}
         </button>
         <button
-
           onClick={handleLogout}
           className="btn mx-2 my-1 justify-start rounded-lg text-sm border-red-300 dark:border-red-700/50 text-red-700 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/20"
         >
@@ -207,4 +209,3 @@ export default function Sidebar() {
     </div>
   );
 }
-
