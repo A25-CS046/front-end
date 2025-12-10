@@ -4,7 +4,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const sendCopilotMessage = async (message, sessionId = "user_123") => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/api/copilot/chat`, {
+    const response = await axios.post(`${API_BASE_URL}/copilot/chat`, {
       messages: [
         {
           role: "user",
@@ -12,6 +12,7 @@ export const sendCopilotMessage = async (message, sessionId = "user_123") => {
         },
       ],
       session_id: sessionId,
+      context: {},
     });
     return response.data;
   } catch (error) {
