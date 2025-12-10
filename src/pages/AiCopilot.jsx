@@ -10,7 +10,7 @@ import HistoryChatTab from "@/components/AIcopilot/HistoryChatContent";
 import CurrentChatContent from "@/components/AIcopilot/CurrentChatContent";
 
 // API
-import { sendCopilotMessage } from "@/services/copilotApi";
+import { sendCopilotMessage } from "@/api/copilotService";
 import ChatContainerInput from "@/components/AIcopilot/ChatContainerInput";
 
 export default function AiCopilot() {
@@ -58,7 +58,7 @@ export default function AiCopilot() {
       id: Date.now(),
       sender: "user",
       message: input,
-      time: new Date(),
+      time: Date.now(),
     };
     setMessages((prev) => [...prev, userMessage]);
 
@@ -73,7 +73,7 @@ export default function AiCopilot() {
         id: Date.now(),
         sender: "ai",
         message: result.data.reply,
-        time: new Date(),
+        time: Date.now(),
       };
 
       setMessages((prev) => [...prev, aiMessage]);
@@ -83,7 +83,7 @@ export default function AiCopilot() {
         id: Date.now(),
         sender: "ai",
         message: "Error: Gagal memproses pertanyaan.",
-        time: new Date(),
+        time: Date.now(),
       };
       setMessages((prev) => [...prev, errorMessage]);
     }
@@ -172,8 +172,8 @@ export default function AiCopilot() {
       {/* Page Header */}
       <div className="flex px-1 justify-between">
         <div className="flex flex-col">
-          <h1 className="text-xl font-semibold text-primary dark:text-emerald-300">
-            AI COPILOT
+          <h1 className="text-xl sm:text-2xl font-semibold text-blue-600 dark:text-emerald-400 mb-1 sm:mb-2">
+            AI Copilot
           </h1>
           <p className="hidden md:block text-gray-600 dark:text-gray-400 text-sm">
             Ask questions and get predictive insights powered by machine

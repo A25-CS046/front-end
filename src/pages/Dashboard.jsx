@@ -98,10 +98,8 @@ export default function SupervisorDashboard() {
       ]
     : staticStatusData;
 
-  // Team performance from API or fallback
-  const teamPerformance = hasTeamPerfData
-    ? teamPerfData
-    : staticTeamPerformance;
+  // Team performance - always use dummy data (API has no data)
+  const teamPerformance = staticTeamPerformance;
 
   const isLoading = summaryLoading || machinesLoading;
   const hasError =
@@ -123,7 +121,7 @@ export default function SupervisorDashboard() {
     <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div>
-          <h1 className="text-blue-600 dark:text-emerald-400 mb-1 sm:mb-2 text-xl sm:text-2xl">
+          <h1 className="text-xl sm:text-2xl font-semibold text-blue-600 dark:text-emerald-400 mb-1 sm:mb-2">
             Dashboard
           </h1>
 
@@ -159,7 +157,7 @@ export default function SupervisorDashboard() {
       {/* Error Banner */}
       {hasError && (
         <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4 flex items-center gap-3">
-          <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400 flex-shrink-0" />
+          <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0" />
           <div>
             <p className="text-amber-800 dark:text-amber-200 font-medium">
               Unable to fetch live data
