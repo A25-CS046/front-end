@@ -10,7 +10,7 @@ import HistoryChatTab from "@/components/AIcopilot/HistoryChatContent";
 import CurrentChatContent from "@/components/AIcopilot/CurrentChatContent";
 
 // API
-import { sendCopilotMessage } from "@/services/copilotApi";
+import { sendCopilotMessage } from "@/api/copilotService";
 import ChatContainerInput from "@/components/AIcopilot/ChatContainerInput";
 
 export default function AiCopilot() {
@@ -58,7 +58,7 @@ export default function AiCopilot() {
       id: Date.now(),
       sender: "user",
       message: input,
-      time: new Date(),
+      time: Date.now(),
     };
     setMessages((prev) => [...prev, userMessage]);
 
@@ -73,7 +73,7 @@ export default function AiCopilot() {
         id: Date.now(),
         sender: "ai",
         message: result.data.reply,
-        time: new Date(),
+        time: Date.now(),
       };
 
       setMessages((prev) => [...prev, aiMessage]);
@@ -83,7 +83,7 @@ export default function AiCopilot() {
         id: Date.now(),
         sender: "ai",
         message: "Error: Gagal memproses pertanyaan.",
-        time: new Date(),
+        time: Date.now(),
       };
       setMessages((prev) => [...prev, errorMessage]);
     }
