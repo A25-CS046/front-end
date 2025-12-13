@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "@/api/authService";
-import { AlertCircle, Shield, Activity, Bot } from "lucide-react";
+import { useTheme } from "@/hooks/useTheme";
+import { AlertCircle, Activity, Bot } from "lucide-react";
 
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
 
-
 export default function Login({ onLogin }) {
+  const { theme } = useTheme();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -37,13 +38,21 @@ export default function Login({ onLogin }) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-linear-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 flex items-center justify-center p-4">
       <div className="w-full max-w-6xl grid lg:grid-cols-2 gap-8 items-center">
         {/* Left Side - Branding */}
         <div className="hidden lg:block space-y-6">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-blue-500 rounded-xl flex items-center justify-center">
-              <Shield className="w-7 h-7 text-white" />
+            <div className="w-12 h-12 rounded-xl flex items-center justify-center">
+              <img
+                src={
+                  theme === "light"
+                    ? "/images/logo-light.png"
+                    : "/images/logo-dark.png"
+                }
+                alt="AEGIS Logo"
+                className="w-12 h-12"
+              />
             </div>
             <div>
               <h1 className="text-blue-600 dark:text-emerald-400">AEGIS</h1>
@@ -67,7 +76,7 @@ export default function Login({ onLogin }) {
           {/* Features */}
           <div className="space-y-3">
             <div className="flex items-start gap-3 p-3 bg-white/50 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700">
-              <div className="w-8 h-8 bg-blue-500/10 rounded-lg flex items-center justify-center flex-shrink-0">
+              <div className="w-8 h-8 bg-blue-500/10 rounded-lg flex items-center justify-center shrink-0">
                 <Activity className="w-4 h-4 text-blue-600 dark:text-blue-400" />
               </div>
               <div>
@@ -82,7 +91,7 @@ export default function Login({ onLogin }) {
             </div>
 
             <div className="flex items-start gap-3 p-3 bg-white/50 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700">
-              <div className="w-8 h-8 bg-emerald-500/10 rounded-lg flex items-center justify-center flex-shrink-0">
+              <div className="w-8 h-8 bg-emerald-500/10 rounded-lg flex items-center justify-center shrink-0">
                 <Bot className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
               </div>
               <div>
@@ -97,7 +106,7 @@ export default function Login({ onLogin }) {
             </div>
 
             <div className="flex items-start gap-3 p-3 bg-white/50 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700">
-              <div className="w-8 h-8 bg-amber-500/10 rounded-lg flex items-center justify-center flex-shrink-0">
+              <div className="w-8 h-8 bg-amber-500/10 rounded-lg flex items-center justify-center shrink-0">
                 <AlertCircle className="w-4 h-4 text-amber-600 dark:text-amber-400" />
               </div>
               <div>
@@ -127,7 +136,7 @@ export default function Login({ onLogin }) {
           <form onSubmit={handleLogin} className="space-y-4">
             {error && (
               <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-lg flex items-start gap-2">
-                <AlertCircle className="w-4 h-4 text-red-600 dark:text-red-400 mt-0.5 flex-shrink-0" />
+                <AlertCircle className="w-4 h-4 text-red-600 dark:text-red-400 mt-0.5 shrink-0" />
                 <p className="text-sm text-red-600 dark:text-red-400">
                   {error}
                 </p>
@@ -206,8 +215,16 @@ export default function Login({ onLogin }) {
         {/* Mobile Branding */}
         <div className="lg:hidden text-center">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-blue-500 rounded-xl flex items-center justify-center">
-              <Shield className="w-6 h-6 text-white" />
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center">
+              <img
+                src={
+                  theme === "light"
+                    ? "/images/logo-light.png"
+                    : "/images/logo-dark.png"
+                }
+                alt="AEGIS Logo"
+                className="w-10 h-10"
+              />
             </div>
             <h1 className="text-blue-600 dark:text-emerald-400">AEGIS</h1>
           </div>
