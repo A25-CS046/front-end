@@ -41,7 +41,7 @@ cp .env.example .env
 ```
 
 ```env
-VITE_API_BASE_URL=http://localhost:5000/api
+VITE_API_BASE_URL=http://localhost:8000/api
 VITE_APP_NAME="Predictive Maintenance System"
 VITE_ENV=development
 ```
