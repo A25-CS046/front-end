@@ -27,13 +27,36 @@ npm run dev
 
 ### 3. Environment Variables
 
-Create a `.env.production` file in the root directory:
+This project uses two environment files:
+
+- **`.env`** – Used for local development (`npm run dev`)
+- **`.env.production`** – Used for production builds (`npm run build:prod`)
+
+#### Development (`.env`)
+
+Copy from `.env.example` and adjust as needed:
+
+```bash
+cp .env.example .env
+```
+
+```env
+VITE_API_BASE_URL=http://localhost:5000/api
+VITE_APP_NAME="Predictive Maintenance System"
+VITE_ENV=development
+```
+
+#### Production (`.env.production`)
+
+Create a `.env.production` file for production builds:
 
 ```env
 VITE_API_BASE_URL=https://your-backend-url/api
 VITE_APP_NAME="Predictive Maintenance System"
 VITE_ENV=production
 ```
+
+> **Note:** Any change to `.env.production` requires a rebuild (`npm run build:prod`).
 
 ### 4. Build for Production
 
@@ -43,20 +66,45 @@ npm run build:prod
 
 ### 5. Dockerization
 
-Multi-stage Dockerfile is provided. To build and run:
+Multi-stage Dockerfile is provided. To build and run locally:
 
 ```bash
-docker build -t pm-frontend .
-docker run -d -p 8080:80 --name pm-frontend pm-frontend
+docker build -t frontend-app .
+docker run -d -p 8080:80 --name frontend-app frontend-app
 ```
 
 ### 6. Google Cloud Run Deployment
 
-You can deploy directly using Cloud Run:
+#### Step 1: Build Docker Image
 
 ```bash
-gcloud run deploy aegis --source . --project=<your-gcp-project> --region=asia-southeast2 --port=80 --allow-unauthenticated
+docker build -t frontend-app .
 ```
+
+#### Step 2: Tag for Google Container Registry (GCR)
+
+```bash
+docker tag frontend-app gcr.io/<your-gcp-project>/aegis-frontend
+```
+
+#### Step 3: Push to GCR
+
+```bash
+docker push gcr.io/<your-gcp-project>/aegis-frontend
+```
+
+#### Step 4: Deploy to Cloud Run
+
+```bash
+gcloud run deploy aegis \
+  --image gcr.io/<your-gcp-project>/aegis-frontend \
+  --project=<your-gcp-project> \
+  --region=asia-southeast2 \
+  --port=80 \
+  --allow-unauthenticated
+```
+
+> **Tip:** Replace `<your-gcp-project>` with your actual GCP project ID (e.g., `gen-lang-client-0256469220`).
 
 ## SPA Routing
 
